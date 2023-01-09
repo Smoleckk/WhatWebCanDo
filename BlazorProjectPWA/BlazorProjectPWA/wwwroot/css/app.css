@@ -1,0 +1,17 @@
+﻿.responsive-font-h1 {
+    font-size: 120px;
+}
+
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 1300px) {
+    .responsive-font-h1 {
+        font-size: 80px;
+    }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+    .responsive-font-h1 {
+        font-size: 30px;
+    }
+}

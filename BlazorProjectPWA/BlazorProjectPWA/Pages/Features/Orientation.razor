@@ -1,0 +1,22 @@
+﻿@page "/full-screen"
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Orientation</PageTitle>
+<p>
+    <button class="start" id="startFull">Start fullscreen on the whole page</button>
+    <button id="exit">Exit fullscreen</button>
+</p>
+
+<div>
+    <button class="start" id="startBox">Start fullscreen on just the green box</button>
+    <div id="box">THE BOX</div>
+</div>
+
+<p id="logTarget"></p>
+
+@code {
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("getOrientation");
+    }
+}

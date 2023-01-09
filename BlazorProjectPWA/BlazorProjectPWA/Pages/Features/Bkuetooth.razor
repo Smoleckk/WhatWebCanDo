@@ -1,0 +1,17 @@
+﻿@page "/bluetooth"
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Bluetooth</PageTitle>
+<p>
+    <button onclick="readBatteryLevel()">Read Bluetooth device's<br>battery level</button>
+</p>
+
+<p id="target"></p>
+
+
+@code {
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("readBatteryLevel");
+    }
+}

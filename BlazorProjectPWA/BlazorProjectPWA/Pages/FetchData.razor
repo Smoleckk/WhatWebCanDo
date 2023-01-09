@@ -1,0 +1,136 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+<PageTitle>Users</PageTitle>
+
+<h1>Users Actions</h1>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Country</th>
+                <th>Actions</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.id</td>
+                    <td>@user.name</td>
+                    <td>@user.surname</td>
+                    <td>@user.country</td>
+                    <td><button class="btn btn-danger" @onclick="() => DeleteUser(user.id)">Delete user</button></td>
+                    <td><button class="btn btn-warning" @onclick="() => EditUser(user.id)">Edit</button></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <h1>Add Or Edit User</h1>
+    <input class="" placeholder="Name" @bind="name" @bind:event="oninput" />
+    <input class="" placeholder="surname" @bind="surname" />
+    <input class="" placeholder="country" @bind="country" />
+    <button class="btn btn-primary" @onclick="AddUser">Add user</button>
+
+    <h1>Filtr Users By Country</h1>
+    <input class="" placeholder="country" @bind="filtrCountry" @bind:event="oninput" />
+    <select name="country" id="country" @bind="filtrCountry">
+        @foreach (var user in usersFiltr)
+        {
+            <option value="@user.country">@user.country</option>
+        }
+    </select>
+    <button class="btn btn-success" @onclick="()=>GetUsersByCountry(filtrCountry)">Filtr By country</button>
+    <button class="btn btn-secondary" @onclick="GetUsers">Clear filters</button>
+
+
+}
+
+
+
+@code {
+    public string? name;
+
+    public string? surname;
+
+    public string? country;
+
+    public string? filtrCountry;
+
+
+    public class User
+    {
+        public Guid id { get; set; }
+
+        public string name { get; set; }
+
+        public string surname { get; set; }
+
+        public string country { get; set; }
+
+    }
+    public class UserDto
+    {
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string country { get; set; }
+    }
+
+    private User[]? users;
+    private User[]? usersFiltr;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        //  users = await Http.GetFromJsonAsync<User[]>("https://apismoleckk.azurewebsites.net/users");
+        users = await Http.GetFromJsonAsync<User[]>("https://apismoleckk.azurewebsites.net/users");
+        usersFiltr = await Http.GetFromJsonAsync<User[]>("https://apismoleckk.azurewebsites.net/users");
+
+
+
+    }
+    private async Task GetUsers()
+    {
+        users = await Http.GetFromJsonAsync<User[]>("https://apismoleckk.azurewebsites.net/users");
+    }
+
+    private async Task AddUser()
+    {
+        var userDto = new UserDto { name = name, surname = surname, country = country };
+        await Http.PostAsJsonAsync("https://apismoleckk.azurewebsites.net/users", userDto);
+
+        users = await Http.GetFromJsonAsync<User[]>("https://apismoleckk.azurewebsites.net/users");
+    }
+    private async Task DeleteUser(Guid id)
+    {
+        await Http.DeleteAsync($"https://apismoleckk.azurewebsites.net/users/{id}");
+
+        users = await Http.GetFromJsonAsync<User[]>("https://apismoleckk.azurewebsites.net/users");
+    }
+    private async Task EditUser(Guid id)
+    {
+        var userDto = new UserDto { name = name, surname = surname, country = country };
+        await Http.PutAsJsonAsync($"https://apismoleckk.azurewebsites.net/users/{id}", userDto);
+
+        users = await Http.GetFromJsonAsync<User[]>("https://apismoleckk.azurewebsites.net/users");
+    }
+
+    private async Task GetUsersByCountry(string country)
+    {
+        users = await Http.GetFromJsonAsync<User[]>($"https://apismoleckk.azurewebsites.net/users/{country}");
+    }
+
+}

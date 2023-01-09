@@ -1,0 +1,47 @@
+﻿@page "/bmi"
+
+<PageTitle>Bmi</PageTitle>
+<div style="min-height: 60vh" class="d-flex flex-column align-items-center justify-content-center">
+    <div>
+        <h4>Height (cm)</h4>
+        <input type="number" placeholder="Height" @bind="height" />
+    </div>
+    <div>
+        <h4>Weight (kg)</h4>
+        <input type="number" placeholder="Weight" @bind="weight" />
+    </div>
+    <button class="btn btn-primary" @onclick="calculateBmi">Add todo</button>
+    <h3>Your bmi is @calculated</h3>
+</div>
+@if (calculated > 1 && calculated < 15)
+{
+    <p>Your body mass index is under weight </p>
+}
+@if (15 < calculated && calculated < 40)
+{
+    <p>Your body mass index is normal </p>
+
+}
+@if (calculated > 40)
+{
+    <p>Your body mass index is obsesity, better check your health </p>
+
+}
+
+
+@code {
+    private int height = 0;
+    private int weight = 0;
+
+    private int calculated = 0;
+
+
+    private void calculateBmi()
+    {
+        calculated = height * weight;
+
+    }
+
+}
+
+

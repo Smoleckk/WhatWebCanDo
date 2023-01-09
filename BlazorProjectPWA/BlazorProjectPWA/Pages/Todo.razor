@@ -1,0 +1,50 @@
+﻿@page "/todo"
+
+<PageTitle>Todo</PageTitle>
+<div style="min-height: 60vh" class="d-flex flex-column align-items-center justify-content-center">
+    <h1>Todo (@todos.Count(todo => !todo.IsDone))</h1>
+
+    <ul>
+        @foreach (var todo in todos)
+        {
+            <li>
+                <input type="checkbox" @bind="todo.IsDone" />
+                <h5 class="color">Title is: @todo.Title <span class="color:brown"> </span> Due: @todo.Date?.ToShortDateString()</h5>
+            </li>
+        }
+    </ul>
+
+    <input class="" placeholder="Something todo" @bind="newTodo" @bind:event="oninput" />
+    <input class="" type="date" placeholder="Date" @bind="date" />
+
+    <button class="btn btn-primary" @onclick="AddTodo">Add todo</button>
+</div>
+@*@if (!string.IsNullOrEmpty(newTodo))
+{
+    <p>@newTodo Due @date?.ToShortDateString()</p>
+}*@
+
+
+@code {
+    public class ToDoItem
+    {
+        public string? Title { get; set; }
+
+        public DateTime? Date { get; set; }
+        public bool IsDone { get; set; }
+    }
+
+    private List<ToDoItem> todos = new();
+    private string? newTodo;
+    private DateTime? date;
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new ToDoItem { Title = newTodo, Date = date });
+            newTodo = string.Empty;
+        }
+
+    }
+}

@@ -1,0 +1,25 @@
+﻿@page "/random"
+
+<div style="min-height: 60vh" class="d-flex flex-column align-items-center justify-content-center">
+    <h3>Calculate Celcius </h3>
+
+    <input type="number" placeholder="Height" @bind="celcius" />
+
+    <h1> Celcius to Kelvin -> @calculateKelvin()</h1>
+
+    <h1> Celcius to Fahrenheit -> @calculateFahrenheit()</h1>
+</div>
+@code {
+    private double celcius = 0;
+
+    private double calculateKelvin()
+    {
+        return 273.15 + celcius;
+    }
+
+    private double calculateFahrenheit()
+    {
+        return 32 + (0.55 * celcius);
+    }
+
+}

@@ -1,0 +1,17 @@
+﻿@page "/page"
+@inject IJSRuntime JsRuntime
+
+<PageTitle>foregroundDetection</PageTitle>
+<div style="min-height: 60vh" class="d-flex flex-column align-items-center justify-content-center">
+    <h1>foregroundDetection</h1>
+
+    <p>Switch the browser tab to see the changes.</p>
+    <p>Initial page visibility was <b id="status">unknown</b>.</p>
+    <div id="target"></div>
+</div>
+@code {
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("hiddenPage");
+    }
+}

@@ -1,0 +1,43 @@
+﻿@inherits LayoutComponentBase
+
+<div class="wrapper">
+    <!-- Navbar -->
+<TopBarMenu/>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+        <a href="#" class="brand-link">
+            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Half project</span>
+        </a>
+
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block">Alexander Pierce</a>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+         <NavMenu/>
+            <!-- /.sidebar-menu -->
+
+        </div>
+    </aside>
+
+    <div class="content-wrapper">
+       
+        @Body
+      
+    </div>
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+     <b>Develop by Smoleckk</b>
+    </footer>
+</div>
